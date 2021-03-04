@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Platform, StyleSheet, Text, View } from 'react-native';
 import { BleManager } from 'react-native-ble-plx';
-import { decode, encode } from 'base-64'
+import base64 from 'react-native-base64'
 import Base64Binary from '../helper_functions/base64_binary';
 
 class Home extends Component {
@@ -17,6 +17,7 @@ class Home extends Component {
         red_score: null,
         server: null,
       },
+      umpire_ai_command: 2
     };
   }
 
@@ -82,11 +83,11 @@ class Home extends Component {
     })
   }
 
-  async writeToUmpireAI(device) {
+  async writeToUmpireAI(device, value) {
     const service = "4a220a7a-8094-435b-8b3e-b19682b41381"
     const rx_characteristic = "638b6661-6196-4efc-82f4-e90a59e6e8a3"
 
-    await this.manager.writeCharacteristicWithResponseForDevice(device.id, service, rx_characteristic, encode("ABCDE"))
+    await this.manager.writeCharacteristicWithResponseForDevice(device.id, service, rx_characteristic, base64.encodeFromByteArray(value))
       .then((e) => {
         console.log(e)
       })
@@ -100,7 +101,7 @@ class Home extends Component {
         <Text>Black Score: {this.state.game_state.black_score}</Text>
         <Text>Red Score: {this.state.game_state.red_score}</Text>
         <Text>Server: {this.state.game_state.server}</Text>
-        <Text onPress={() => this.writeToUmpireAI(this.state.ble_device)}>Send Hello</Text>
+        <Text onPress={() => this.writeToUmpireAI(this.state.ble_device, [this.state.umpire_ai_command])}>Send Hello</Text>
       </View>
     )
   }
