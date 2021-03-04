@@ -3,6 +3,8 @@ import { Platform, StyleSheet, Text, View } from 'react-native';
 import { BleManager } from 'react-native-ble-plx';
 import base64 from 'react-native-base64'
 import Base64Binary from '../helper_functions/base64_binary';
+import ScoreBoard from '../components/ScoreBoard';
+import CButton from '../components/CButton';
 
 class Home extends Component {
   constructor() {
@@ -96,12 +98,43 @@ class Home extends Component {
   render() {
     return (
       <View style={styles.maincontainer}>
-        <Text>{this.state.ble_status}</Text>
-        <Text>Status: {this.state.game_state.score_status}</Text>
-        <Text>Black Score: {this.state.game_state.black_score}</Text>
-        <Text>Red Score: {this.state.game_state.red_score}</Text>
-        <Text>Server: {this.state.game_state.server}</Text>
-        <Text onPress={() => this.writeToUmpireAI(this.state.ble_device, [this.state.umpire_ai_command])}>Send Hello</Text>
+        <ScoreBoard
+          leftscore={this.state.game_state.black_score ? this.state.game_state.black_score : 0}
+          rightscore={this.state.game_state.red_score ? this.state.game_state.red_score : 0}
+          server={this.state.game_state.server ? this.state.game_state.server : 0}
+          score_status={this.state.game_state.score_status ? this.state.game_state.score_status : 0}
+        ></ScoreBoard>
+        <View style={styles.controlbuttonscontainer}>
+          <CButton
+            style={styles.controlbuttons}
+            text={"Reset Match"}
+            onPress={() => this.writeToUmpireAI(this.state.ble_device, [this.state.umpire_ai_command])}
+            selected={true}
+            color={"#46c27a"}
+          ></CButton>
+          <CButton
+            style={styles.controlbuttons}
+            text={"Reset Game"}
+            onPress={() => this.writeToUmpireAI(this.state.ble_device, [this.state.umpire_ai_command])}
+            selected={true}
+            color={"#46c27a"}
+          ></CButton>
+          <CButton
+            style={styles.controlbuttons}
+            text={"Collect Hit Data"}
+            onPress={() => this.writeToUmpireAI(this.state.ble_device, [this.state.umpire_ai_command])}
+            selected={true}
+            color={"#46c27a"}
+          ></CButton>
+          <CButton
+            style={styles.controlbuttons}
+            text={"Collect Non Hit Data"}
+            onPress={() => this.writeToUmpireAI(this.state.ble_device, [this.state.umpire_ai_command])}
+            selected={true}
+            color={"#46c27a"}
+          ></CButton>
+        </View>
+        <Text style={{position: 'absolute', left: 20, top: 10}}>{this.state.ble_status}</Text>
       </View>
     )
   }
@@ -111,9 +144,17 @@ const styles = StyleSheet.create({
   maincontainer: {
     display: 'flex',
     flex: 1,
-    backgroundColor: 'red',
+  },
+  controlbuttonscontainer: {
+    position: 'absolute',
+    bottom: 10,
+    display: 'flex',
+    flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center'
+    width: "100%",
+  },
+  controlbuttons: {
+    margin: 10,
   }
 })
 
