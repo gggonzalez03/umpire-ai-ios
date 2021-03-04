@@ -4,20 +4,23 @@ import { PixelRatio, StyleSheet, Text, View } from 'react-native';
 class ScoreBoard extends Component {
 
 	render() {
-		const { server } = this.props
+		const { server, current_status } = this.props
+		const serving = current_status == 0 ? server : 2; // 2 means no one is currently serving
+		console.log(serving)
+
     return (
       <View style={styles.maincontainer}>
-				<View style={[styles.leftscorecontainer, server ? styles.grayedoutblue : {}]}>
+				<View style={[styles.bluecorecontainer, serving == 1 ? styles.bluegrayed : {}]}>
 					<Text style={styles.leftscore}>{this.props.leftscore}</Text>
 				</View>
-				<View style={[styles.rightcorecontainer, server ? {} : styles.grayedoutred]}>
+				<View style={[styles.redcorecontainer, serving == 0 ? styles.redgrayed : {}]}>
 					<Text style={styles.rightscore}>{this.props.rightscore}</Text>
 				</View>
       </View>
     )
   }
 }
-
+const redh = "#ff2957", redl = "#ff9999", blueh = "#297eff", bluel = "#99c2ff"
 const styles = StyleSheet.create({
 	maincontainer: {
 		display: 'flex',
@@ -26,21 +29,21 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		alignItems: 'center'
 	},
-	leftscorecontainer: {
+	bluecorecontainer: {
 		display: 'flex',
 		flex: 1,
 		height: '100%',
 		justifyContent: 'center',
 		alignItems: 'center',
-		backgroundColor: '#12b8ff'
+		backgroundColor: blueh
 	},
-	rightcorecontainer: {
+	redcorecontainer: {
 		display: 'flex',
 		flex: 1,
 		height: '100%',
 		justifyContent: 'center',
 		alignItems: 'center',
-		backgroundColor: '#ff5e74'
+		backgroundColor: redh
 	},
 	leftscore: {
 		fontSize: 300,
@@ -50,11 +53,11 @@ const styles = StyleSheet.create({
 		fontSize: 300,
 		color: "white"
 	},
-	grayedoutred: {
-		backgroundColor: '#ff8f98'
+	redgrayed: {
+		backgroundColor: redl
 	},
-	grayedoutblue: {
-		backgroundColor: "#99ddff"
+	bluegrayed: {
+		backgroundColor: bluel
 	}
 })
 

@@ -18,6 +18,7 @@ class Home extends Component {
         black_score: null,
         red_score: null,
         server: null,
+        current_status: null,
       },
       umpire_ai_command: 2
     };
@@ -80,7 +81,8 @@ class Home extends Component {
           score_status: rx_value[0],
           black_score: rx_value[1],
           red_score: rx_value[2],
-          server: rx_value[3],
+          server: rx_value[3] & 0x0F,
+          current_status: rx_value[3] >> 4,
         } })
     })
   }
@@ -103,6 +105,7 @@ class Home extends Component {
           rightscore={this.state.game_state.red_score ? this.state.game_state.red_score : 0}
           server={this.state.game_state.server ? this.state.game_state.server : 0}
           score_status={this.state.game_state.score_status ? this.state.game_state.score_status : 0}
+          current_status={this.state.game_state.current_status ? this.state.game_state.current_status : 0}
         ></ScoreBoard>
         <View style={styles.controlbuttonscontainer}>
           <CButton
