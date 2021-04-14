@@ -14,7 +14,7 @@
   :large_blue_circle: Send command to start collecting "non hit" data, which means collect sensor data for anything other than the ball hits  
   :red_circle: Binary data file download from the UmpireAI device into the iPad  
   :red_circle: Google Cloud connection to storage, save data files there  
-* User Interface / User Experience
+* User Interface / User Experience  
   :white_check_mark: Display scores in real time  
   :white_check_mark: Indicate who is currently serving  
   :red_circle: Add UI to show the match winnings over total games played  
