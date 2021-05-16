@@ -5,6 +5,7 @@ import base64 from 'react-native-base64'
 import Base64Binary from '../helper_functions/base64_binary';
 import ScoreBoard from '../components/ScoreBoard';
 import CButton from '../components/CButton';
+import KeepAwake from 'react-native-keep-awake';
 
 class Home extends Component {
   constructor() {
@@ -138,6 +139,7 @@ class Home extends Component {
           ></CButton>
         </View>
         <Text style={{position: 'absolute', left: 20, top: 10}}>{this.state.ble_status}</Text>
+        <KeepAwake/>
       </View>
     )
   }
